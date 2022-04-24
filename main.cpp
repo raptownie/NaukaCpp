@@ -59,6 +59,18 @@ int main(int argc, char * argv[]){
 
     //Kamcioszkin.setAge(5);
     std::cout << "wiek Kamila to : " << Kamcioszkin.getAge() << std::endl;
+
+
+    Ulamek a;
+    Ulamek b;
+
+    a.setLicznik(5);
+    a.setMianownik(2);
+    b.setLicznik(10);
+    b.setMianownik(3);
+    a.dodajUlamek(b);
+    std::cout << "Po dodawaniu ulamkow = " << a.getLicznik() << "/" << a.getMianownik() << std::endl;
+
     system("pause");
     return 0;
 }
