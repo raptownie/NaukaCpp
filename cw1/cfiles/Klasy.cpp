@@ -42,3 +42,46 @@ void Czlowiek::setName(std::string name){
     imie = name;
 }
 
+
+Ulamek::Ulamek(){
+    this->x = 0;
+    this->y = 1;
+    std::cout << "Konstruktor wykonal sie " << ++(this->counter) << " razy." << std::endl;
+}
+
+Ulamek::~Ulamek(){
+
+}
+
+void Ulamek::setLicznik(int x){
+    this->x = x;
+}
+
+void Ulamek::setMianownik(int y){
+    this->y = y;
+}
+
+
+int Ulamek::getLicznik() const {
+    return this->x;
+}
+
+int Ulamek::getMianownik() const {
+    return this->y;
+}
+
+void Ulamek::dodajUlamek(Ulamek x){
+    int mianownikTempIn = this->y;
+    int licznikTempIn = 0;
+    if ( (this->y) != (x.getMianownik())){        
+        mianownikTempIn = this->y * x.getMianownik();
+        licznikTempIn = (this->x *x.getMianownik()) + (x.getLicznik() * this->y);
+    }
+    else{
+        licznikTempIn = this->x + x.getLicznik();
+    }
+    this->setLicznik(licznikTempIn);
+    this->setMianownik(mianownikTempIn);
+}
+
+int Ulamek::counter = 0;

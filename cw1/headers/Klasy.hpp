@@ -24,4 +24,19 @@ struct data {
 };
 
 
+class Ulamek {
+    public:
+        Ulamek();
+        ~Ulamek();
+        int getLicznik() const;
+        int getMianownik() const;
+        void setLicznik(int x);
+        void setMianownik(int y);
+        void dodajUlamek(Ulamek p);
+        static int counter;
+    private:
+        int x;
+        int y;        
+};
+
 #endif
