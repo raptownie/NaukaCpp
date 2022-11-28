@@ -17,4 +17,11 @@ class Czlowiek{
         std::string getName();
 };
 
+struct data {
+    int a;
+    int b;
+    float c;
+};
+
+
 #endif

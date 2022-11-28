@@ -1,6 +1,8 @@
 #include "../headers/Klasy.hpp"
 
 
+
+
 Czlowiek::Czlowiek(){
     static int i=0;
     wiek=18;

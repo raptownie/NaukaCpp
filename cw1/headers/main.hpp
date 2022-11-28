@@ -9,5 +9,6 @@
 #include "converter.hpp"
 #include "daneCzlowieka.hpp" 
 #include "Klasy.hpp"
+#include "zwierzeta.hpp"
 
 #endif

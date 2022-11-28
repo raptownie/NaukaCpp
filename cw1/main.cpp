@@ -1,6 +1,11 @@
 #include "headers/main.hpp"
 
-int a;
+union Typsd{
+    uint8_t Workhard5;
+    uint16_t playhardID;
+}das;
+
+
 
 int main(int argc, char * argv[]){
     /*
@@ -30,8 +35,8 @@ int main(int argc, char * argv[]){
     std::cout << "Wartosc argv : " << argv[0]<< std::endl;
     int a;
     while(argc--){
-        if (!strcmp(argv[argc], "b")){
-            a = 1;
+        if (!strcmp(argv[argc], "b")){     
+            a = 1; 
         }
         if (!strcmp(argv[argc], "t")){
             a = 2;
@@ -50,15 +55,40 @@ int main(int argc, char * argv[]){
     int LiczbaLudzi;
     std::cout << "Podaj liczbe ludkow: ";
     std::cin >> LiczbaLudzi; 
-
-    HumanData* DaneLudkow = WypelnijDaneLudzi(LiczbaLudzi);
+ 
+    HumanData* DaneLudkow = Wypeln ijDaneLudzi(LiczbaLudzi);
     
     WyswietlDaneLudkow( DaneLudkow, LiczbaLudzi);
     */
+   /*
     Czlowiek Kamcioszkin(29);
-
+    
     //Kamcioszkin.setAge(5);
-    std::cout << "wiek Kamila to : " << Kamcioszkin.getAge() << std::endl;
+    std::cout << "imie Kamila to : " << Kamcioszkin.getName() << std::endl; 
+    std::cout << "wiek Kamila to : " << Kamcioszkin.getAge() << std::endl;    
+
+
+
+    int8_t temp = 0;
+    if (temp) std::cout << "wykonalo sie" << std::endl;
+    */  
+
+   Zwierze Zwierzatko;
+   Krowa Krowiatko;
+ std::cout << " deklaracja zwierza : " <<std::endl;
+   Zwierze *pZwierze = new Zwierze;
+
+   std::cout << " deklaracja krowy : " <<std::endl;
+   Krowa *pKrowa = new Krowa;
+
+    pZwierze = &Krowiatko;
+    pZwierze->DajGlos();
+
+
+
+    delete pKrowa;
+    delete pZwierze;
+
     system("pause");
     return 0;
 }
