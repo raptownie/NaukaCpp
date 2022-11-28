@@ -41,7 +41,7 @@
     bracket_depth="128"
     cache_ast_files="false"
     c_std="c11"
-    compiler="Microsoft Visual C++"
+    compiler="Linux"
     compiler_include_path="C:/Users/sikorak/AppData/Roaming/SciTools/samples/gitahead-Windows/%include%"
     create_implicit_special_member_functions="false"
     create_references_in_assembly="true"
@@ -52,7 +52,7 @@
     cxx_std="c++17"
     cuda_arch="sm_20"
     delayed_template_parsing="true"
-    triple="unknown-pc-windows"
+    triple="unknown-unknown-linux"
     ignore_dir_in_include_files="false"
     ignore_preprocessor_conditionals="false"
     ios_min_version="5.0"
@@ -74,12 +74,29 @@
     treat_system_includes_as_user_includes="true"
     use_case_insensitive_lookup_for_includes="false"
     compare_includes_by_content="false"
-    analyze_headers_in_isolation="false"
+    analyze_headers_in_isolation="true"
     use_clang="true"
     use_include_cache="true"
     merge_multiple_function_definitions="false"
     warning_level="NoWarnings"
     objc_memory_mode="MrrMode"
-    worker_process_timeout="2"/>
+    worker_process_timeout="2">
+    <includes>
+      <include
+        directory="D:/etools/IDE/x86/mingw/GCC4.4.0/lib/gcc/mingw32/4.4.0/include/c++"/>
+      <include
+        directory="D:/etools/IDE/x86/mingw/GCC4.4.0/lib/gcc/mingw32/4.4.0/include/c++/mingw32"/>
+      <include
+        directory="D:/etools/IDE/x86/mingw/GCC4.4.0/lib/gcc/mingw32/4.4.0/include/c++/tr1"/>
+      <include
+        directory="D:/etools/IDE/x86/mingw/GCC4.4.0/lib/gcc/mingw32/4.4.0/include/ssp"/>
+      <include
+        directory="D:/etools/IDE/x86/mingw/GCC4.4.0/lib/gcc/mingw32/4.4.0/include/c++/java/util"/>
+    </includes>
+    <system_includes>
+      <include
+        directory="D:/etools/IDE/x86/mingw/GCC4.4.0/lib/gcc/mingw32/4.4.0/include"/>
+    </system_includes>
+  </cpp_options>
   <imports/>
 </project>
