@@ -5,7 +5,7 @@ ODIR = obj
 CPPDIR = source
 
 #lokalizacja plikow *.o
-OBJECTSDIR = $(ODIR)\main.o $(ODIR)\czlowiek.o $(ODIR)\menuMiniBase.o $(ODIR)\minibaza.o
+OBJECTSDIR = $(ODIR)\main.o $(ODIR)\human_class.o $(ODIR)\mainMenu_handler.o $(ODIR)\miniDatabase_class.o
 
 #headers dir
 HEADERSDIR = headers
@@ -17,21 +17,21 @@ $(CPPDIR)\main.exe: $(OBJECTSDIR)
 	@g++ -o main.exe $(OBJECTSDIR)
 	@echo "Komipilacja zakonczona"
 
-$(ODIR)\main.o: $(CPPDIR)\main.cpp $(HEADERSDIR)\minibaza.hpp
+$(ODIR)\main.o: $(CPPDIR)\main.cpp $(HEADERSDIR)\miniDatabase_class.hpp $(HEADERSDIR)\mainMenu_handler.hpp
 	@g++ $(CppFlags) $(CPPDIR)\main.cpp -o $(ODIR)\main.o
 	@echo "compiled main.o"
 
-$(ODIR)\czlowiek.o: $(CPPDIR)\czlowiek.cpp $(HEADERSDIR)\czlowiek.hpp
-	@g++ $(CppFlags) $(CPPDIR)\czlowiek.cpp -o $(ODIR)\czlowiek.o
-	@echo "compiled czlowiek.o"
+$(ODIR)\human_class.o: $(CPPDIR)\human_class.cpp $(HEADERSDIR)\human_class.hpp
+	@g++ $(CppFlags) $(CPPDIR)\human_class.cpp -o $(ODIR)\human_class.o
+	@echo "compiled human_class.o"
 	
-$(ODIR)\menuMiniBase.o: $(CPPDIR)\menuMiniBase.cpp $(HEADERSDIR)\menuMiniBase.hpp
-	@g++ $(CppFlags) $(CPPDIR)\menuMiniBase.cpp -o $(ODIR)\menuMiniBase.o
-	@echo "compiled menuMiniBase.o"
+$(ODIR)\mainMenu_handler.o: $(CPPDIR)\mainMenu_handler.cpp $(HEADERSDIR)\mainMenu_handler.hpp $(HEADERSDIR)\miniDatabase_class.hpp
+	@g++ $(CppFlags) $(CPPDIR)\mainMenu_handler.cpp -o $(ODIR)\mainMenu_handler.o
+	@echo "compiled mainMenu_handler.o"
 	
-$(ODIR)\minibaza.o: $(CPPDIR)\minibaza.cpp $(HEADERSDIR)\minibaza.hpp $(HEADERSDIR)\menuMiniBase.hpp $(HEADERSDIR)\czlowiek.hpp
-	@g++ $(CppFlags) $(CPPDIR)\minibaza.cpp -o $(ODIR)\minibaza.o
-	@echo "compiled minibaza.o"
+$(ODIR)\miniDatabase_class.o: $(CPPDIR)\miniDatabase_class.cpp $(HEADERSDIR)\miniDatabase_class.hpp $(HEADERSDIR)\human_class.hpp
+	@g++ $(CppFlags) $(CPPDIR)\miniDatabase_class.cpp -o $(ODIR)\miniDatabase_class.o
+	@echo "compiled miniDatabase_class.o"
 
 	
 .PHONY: clean

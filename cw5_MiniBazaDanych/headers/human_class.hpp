@@ -1,13 +1,13 @@
-#ifndef _czlowiek
-#define _czlowiek
+#ifndef _human_class
+#define _human_class
 
 #include <iostream>
 
-class czlowiek
+class human
 {
     public:
-        czlowiek();
-        ~czlowiek();
+        human();
+        ~human();
 
         std::string getName(void);
         void setName (std::string);

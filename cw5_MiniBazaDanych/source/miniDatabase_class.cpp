@@ -1,59 +1,59 @@
-#include "minibaza.hpp"
+#include "miniDatabase_class.hpp"
 #include <string>
 #include <fstream>
 
 
-miniBaza::miniBaza(int maxNumberOfEntries)
+miniDatabase::miniDatabase(int maxNumberOfEntries)
 {
     this->maxNumberOfEntries = maxNumberOfEntries;
     this->numberOfEntries = 0;
-    pDatabaseOfHuman = new czlowiek[this->maxNumberOfEntries];
+    pDatabaseOfHuman = new human[this->maxNumberOfEntries];
 }
 
-miniBaza::~miniBaza()
+miniDatabase::~miniDatabase()
 {
     delete[] pDatabaseOfHuman;
 }
 
 
-int miniBaza::getNumberOfEntries(void)
+int miniDatabase::getNumberOfEntries(void)
 {
     return this->numberOfEntries;
 }
 
-int miniBaza::getMaxNumberOfEntries(void)
+int miniDatabase::getMaxNumberOfEntries(void)
 {
     return this->maxNumberOfEntries;
 }
 
-bool miniBaza::setNewHuman(czlowiek czlowiek)
+bool miniDatabase::setNewHuman(human NewHuman)
 {
     bool rResult = false;
 
-    if (this->numberOfEntries < this->maxNumberOfEntries)
+    if (getNumberOfEntries() < getMaxNumberOfEntries())
     {
-        pDatabaseOfHuman[numberOfEntries].setName(czlowiek.getName());
-        pDatabaseOfHuman[numberOfEntries].setSurname(czlowiek.getSurname());
-        pDatabaseOfHuman[numberOfEntries].setPhoneNumber(czlowiek.getPhoneNumber());
-        pDatabaseOfHuman[numberOfEntries].setAge(czlowiek.getAge());
+        pDatabaseOfHuman[numberOfEntries].setName(NewHuman.getName());
+        pDatabaseOfHuman[numberOfEntries].setSurname(NewHuman.getSurname());
+        pDatabaseOfHuman[numberOfEntries].setPhoneNumber(NewHuman.getPhoneNumber());
+        pDatabaseOfHuman[numberOfEntries].setAge(NewHuman.getAge());
         numberOfEntries++;
         rResult = true;
     }
     else
     {
-        std::cout << "Przekroczono maksymalna ilosc osob" << std::endl;
+        std::cout << "maximum number of entries exceeded" << std::endl;
         rResult = false;
     }
     return rResult;
 }
 
-bool miniBaza::showAllHumansInDatabase(void)
+bool miniDatabase::showAllHumansInDatabase(void)
 {
     bool rResult = false;
 
-    if (this->numberOfEntries != 0)
+    if (getNumberOfEntries() != 0)
     {
-        for (int i = 0; i < numberOfEntries; i++)
+        for (int i = 0; i < getNumberOfEntries(); i++)
         {
             std::cout <<  BuildDataLine(i) << std::endl;
         }
@@ -68,12 +68,15 @@ bool miniBaza::showAllHumansInDatabase(void)
     return rResult;
 }
 
-std::string miniBaza::BuildDataLine(int index)
+std::string miniDatabase::BuildDataLine(int index)
 {
     std::string TempString;
-    if (index <= numberOfEntries && index < maxNumberOfEntries)
+    if (index <= getNumberOfEntries() && index < getMaxNumberOfEntries())
     {
-        TempString = pDatabaseOfHuman[index].getName() + "; " + pDatabaseOfHuman[index].getSurname() + "; " + pDatabaseOfHuman[index].getPhoneNumber() + "; " + static_cast<char>((int)(pDatabaseOfHuman[index].getAge()));
+        TempString = pDatabaseOfHuman[index].getName() + "; "  \
+                    + pDatabaseOfHuman[index].getSurname() + "; " \
+                    + pDatabaseOfHuman[index].getPhoneNumber() + "; " \
+                    + std::to_string(pDatabaseOfHuman[index].getAge());
     }
     else
     {
@@ -82,12 +85,12 @@ std::string miniBaza::BuildDataLine(int index)
 
     return TempString;
 }
-bool miniBaza::saveDatabaseToFile(std::string & fileName)
+bool miniDatabase::saveDatabaseToFile(std::string fileName)
 {
     bool rResult = false;
     std::fstream MyFile;
 
-    if (this->numberOfEntries == 0)
+    if (getNumberOfEntries() == 0)
     {
         std::cout << "Database is empty!" << std::endl;
         return false;
@@ -98,7 +101,7 @@ bool miniBaza::saveDatabaseToFile(std::string & fileName)
     if (MyFile.is_open() == true)
     {
         std::string tempLine;
-        for(int i = 0; i<numberOfEntries; i++)
+        for(int i = 0; i < getNumberOfEntries(); i++)
         {
             tempLine = BuildDataLine(i);
             MyFile << tempLine << std::endl;
