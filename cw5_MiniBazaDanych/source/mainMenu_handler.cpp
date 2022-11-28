@@ -22,14 +22,14 @@ void mainMenu::MainMenu_perform()
 {
     system("cls");
     sayHello();
-    int selectedNumber;
+    char selectedNumber = '0';
 
-    while(true)
+    while(selectedNumber != '.')
     {
         availableMenuOptions();
         std::cin >> selectedNumber;
         if (selectedNumber == '.') break;
-        if (selectedNumber > 9 || selectedNumber < 1)
+        if (selectedNumber > '9' || selectedNumber < '1')
         {
 
             std::cout << "its not a number" << std::endl;
