@@ -15,7 +15,9 @@ class miniDatabase : private human
         bool showAllHumansInDatabase(void);
         bool saveDatabaseToFile(std::string);
         bool loadDataBaseFromFile(std::string);
-        //human searchByName(std::string);
+        bool maxEntriesExceeded(void);
+        unsigned int * searchByName(std::string);
+        void displayDataBaseByIndex(unsigned int *);
         //void removeEntiresFromDatabase(int);
     private:
         int numberOfEntries;

@@ -15,7 +15,6 @@ miniDatabase::~miniDatabase()
     delete[] pDatabaseOfHuman;
 }
 
-
 int miniDatabase::getNumberOfEntries(void)
 {
     return this->numberOfEntries;
@@ -96,7 +95,7 @@ bool miniDatabase::saveDatabaseToFile(std::string fileName)
         return false;
     }
 
-    MyFile.open(fileName, std::ios::out | std::ios::trunc);
+    MyFile.open((fileName + ".txt"), std::ios::out | std::ios::trunc);
 
     if (MyFile.is_open() == true)
     {
@@ -118,6 +117,11 @@ bool miniDatabase::saveDatabaseToFile(std::string fileName)
     return rResult;
 }
 
+bool miniDatabase::maxEntriesExceeded(void)
+{
+    return (getNumberOfEntries() >= getMaxNumberOfEntries());
+}
+
 bool loadDataBaseFromFile(std::string fileName)
 {
     bool rResult = false;
@@ -128,5 +132,35 @@ bool loadDataBaseFromFile(std::string fileName)
     return rResult;
 }        
 
-//czlowiek searchByName(std::string);
+
+unsigned int * miniDatabase::searchByName(std::string nameToFound)
+{
+    unsigned int *pFoundedIndexes = NULL;
+    int numberOfFoundedNames = 0;
+
+    for (int i = 0; i < getNumberOfEntries(); i++)
+    {
+        if(pDatabaseOfHuman[i].getName() == nameToFound) numberOfFoundedNames++;
+    }
+    if (numberOfFoundedNames != 0)
+    {
+        pFoundedIndexes = new unsigned int(numberOfFoundedNames);
+        for (int i = 0; i < getNumberOfEntries(); i++)
+        {
+            int tempInc=0;
+            if(pDatabaseOfHuman[i].getName() == nameToFound)
+            {
+                pFoundedIndexes[tempInc] = i;
+                tempInc++;
+            }
+        }
+    }
+    return pFoundedIndexes;
+}
+
+void miniDatabase::displayDataBaseByIndex(unsigned int * pIndexes)
+{
+    
+}
+
 //void removeEntiresFromDatabase(int);

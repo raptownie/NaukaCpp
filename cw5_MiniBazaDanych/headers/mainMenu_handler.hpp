@@ -3,13 +3,21 @@
 
 #include "miniDatabase_class.hpp"
 
-class mainMenu : private miniDatabase
+class mainMenu
 {
     public:
         void MainMenu_perform(void);
     private:
         void sayHello(void);
-        void availableMenuOptions(void);
+        void showChooseSourceOfDataBase(void);
+        void showAvailableMenuOptions(void);
+        void handleSelectedOption(char);
+        void handleSelectedDataBaseSource(char);
+        bool checkInputCondition(char, char, char);
+        miniDatabase* pMiniDataBase;
+        bool dataBaseIsLoadedFromFile = false;
+        std::string fileName = "";
+        bool firstRunExecuted = false;
 };
 
 #endif
