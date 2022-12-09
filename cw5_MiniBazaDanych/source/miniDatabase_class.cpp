@@ -6,7 +6,7 @@
 miniDatabase::miniDatabase(int maxNumberOfEntries)
 {
     this->maxNumberOfEntries = maxNumberOfEntries;
-    this->numberOfEntries = 0;
+    this->numberOfEntries = 0U;
     pDatabaseOfHuman = new human[this->maxNumberOfEntries];
 }
 
@@ -15,12 +15,22 @@ miniDatabase::~miniDatabase()
     delete[] pDatabaseOfHuman;
 }
 
-int miniDatabase::getNumberOfEntries(void)
+unsigned int miniDatabase::getNumberOfEntries(void)
 {
     return this->numberOfEntries;
 }
 
-int miniDatabase::getMaxNumberOfEntries(void)
+void miniDatabase::increaseNumberOfEntries(void)
+{
+    this->numberOfEntries++;
+}
+
+void miniDatabase::decreaseNumberOfEntries(void)
+{
+    this->numberOfEntries--;
+}
+
+unsigned int miniDatabase::getMaxNumberOfEntries(void)
 {
     return this->maxNumberOfEntries;
 }
@@ -35,7 +45,7 @@ bool miniDatabase::setNewHuman(human NewHuman)
         pDatabaseOfHuman[numberOfEntries].setSurname(NewHuman.getSurname());
         pDatabaseOfHuman[numberOfEntries].setPhoneNumber(NewHuman.getPhoneNumber());
         pDatabaseOfHuman[numberOfEntries].setAge(NewHuman.getAge());
-        numberOfEntries++;
+        increaseNumberOfEntries();
         rResult = true;
     }
     else
@@ -50,9 +60,9 @@ bool miniDatabase::showAllHumansInDatabase(void)
 {
     bool rResult = false;
 
-    if (getNumberOfEntries() != 0)
+    if (getNumberOfEntries() != 0U)
     {
-        for (int i = 0; i < getNumberOfEntries(); i++)
+        for (unsigned int i = 0; i < getNumberOfEntries(); i++)
         {
             std::cout <<  BuildDataLine(i) << std::endl;
         }
@@ -67,12 +77,13 @@ bool miniDatabase::showAllHumansInDatabase(void)
     return rResult;
 }
 
-std::string miniDatabase::BuildDataLine(int index)
+std::string miniDatabase::BuildDataLine(unsigned int index)
 {
     std::string TempString;
     if (index <= getNumberOfEntries() && index < getMaxNumberOfEntries())
     {
-        TempString = pDatabaseOfHuman[index].getName() + "; "  \
+        TempString = std::to_string(index+1) + "; " \
+                    + pDatabaseOfHuman[index].getName() + "; "  \
                     + pDatabaseOfHuman[index].getSurname() + "; " \
                     + pDatabaseOfHuman[index].getPhoneNumber() + "; " \
                     + std::to_string(pDatabaseOfHuman[index].getAge());
@@ -100,7 +111,7 @@ bool miniDatabase::saveDatabaseToFile(std::string fileName)
     if (MyFile.is_open() == true)
     {
         std::string tempLine;
-        for(int i = 0; i < getNumberOfEntries(); i++)
+        for(unsigned int i = 0; i < getNumberOfEntries(); i++)
         {
             tempLine = BuildDataLine(i);
             MyFile << tempLine << std::endl;
@@ -122,45 +133,74 @@ bool miniDatabase::maxEntriesExceeded(void)
     return (getNumberOfEntries() >= getMaxNumberOfEntries());
 }
 
-bool loadDataBaseFromFile(std::string fileName)
+bool miniDatabase::loadDataBaseFromFile(std::string fileName)
 {
     bool rResult = false;
-    std::fstream DataBaseFile;
-
-    //DataBaseFile.open(fileName, std::ios::binary | std::ios::in);
-
+    std::ifstream DataBaseFile(fileName + ".txt");
+    unsigned int count = 0;
+    //DataBaseFile.open((fileName+ ".txt"), std::ios::binary | std::ios::in);
+    if (DataBaseFile.is_open())
+    {
+        DataBaseFile >> count;
+        std::cout << "ilosc wpisow: " << count << std::endl;
+        rResult = true;
+    }
+    else
+    {
+        std::cout << "cant open " << fileName << ".txt file" << std::endl;
+        rResult = false;
+    }
     return rResult;
 }        
 
 
-unsigned int * miniDatabase::searchByName(std::string nameToFound)
+void miniDatabase::searchByName(std::string nameToFound)
 {
-    unsigned int *pFoundedIndexes = NULL;
-    int numberOfFoundedNames = 0;
-
-    for (int i = 0; i < getNumberOfEntries(); i++)
+    for (unsigned int i = 0; i < getNumberOfEntries(); i++)
     {
-        if(pDatabaseOfHuman[i].getName() == nameToFound) numberOfFoundedNames++;
+        if(pDatabaseOfHuman[i].getName().compare(nameToFound) == 0U) displayIndexEntries(i);
     }
-    if (numberOfFoundedNames != 0)
+}
+
+void miniDatabase::displayIndexEntries(unsigned int index)
+{
+    std::cout << BuildDataLine(index) << std::endl;
+}
+
+bool miniDatabase::removeIndexEntiresFromDatabase(unsigned int index)
+{
+    bool rReturn = false;
+
+    if (index == 0 ) return rReturn;
+
+    unsigned int realIndex = index-1U;
+
+    if (realIndex <  getNumberOfEntries())
     {
-        pFoundedIndexes = new unsigned int(numberOfFoundedNames);
-        for (int i = 0; i < getNumberOfEntries(); i++)
+        for(unsigned int i = realIndex; i < getNumberOfEntries(); i++)
         {
-            int tempInc=0;
-            if(pDatabaseOfHuman[i].getName() == nameToFound)
+            if ( (i + 1) != getNumberOfEntries())
             {
-                pFoundedIndexes[tempInc] = i;
-                tempInc++;
+                pDatabaseOfHuman[i].setName(pDatabaseOfHuman[i+1].getName());
+                pDatabaseOfHuman[i].setSurname(pDatabaseOfHuman[i+1].getSurname());
+                pDatabaseOfHuman[i].setPhoneNumber(pDatabaseOfHuman[i+1].getPhoneNumber());
+                pDatabaseOfHuman[i].setAge(pDatabaseOfHuman[i+1].getAge());   
+            } else
+            {
+                pDatabaseOfHuman[i].setBlank();
             }
+           rReturn = true;            
         }
+        decreaseNumberOfEntries();
     }
-    return pFoundedIndexes;
+    else
+    {
+        rReturn = false;
+    }
+    return rReturn;
 }
 
-void miniDatabase::displayDataBaseByIndex(unsigned int * pIndexes)
+bool miniDatabase::isNotEmpty(void)
 {
-    
+    return (getNumberOfEntries() != 0U);
 }
-
-//void removeEntiresFromDatabase(int);

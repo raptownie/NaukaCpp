@@ -17,7 +17,7 @@ void mainMenu::showAvailableMenuOptions()
     std::cout << "3. Save Database to file" << std::endl;
     std::cout << "4. Load Database from file" << std::endl;
     std::cout << "5. Search Database by name" << std::endl;
-    std::cout << "6. Remove person from Database" << std::endl;
+    std::cout << "6. Remove person from Database (by index)" << std::endl;
     std::cout << "Press . (dot) for exit" << std::endl;
 }
 
@@ -74,7 +74,6 @@ void mainMenu::handleSelectedOption(char Input)
     human humanData;
     std::string tempStringInput = "";
     unsigned short tempShort = 0U;
-    unsigned int * pFoundedIndexes = NULL;
 
     switch (Input)
     {        
@@ -111,22 +110,36 @@ void mainMenu::handleSelectedOption(char Input)
 
         /* 2. Show All persons            */
         case '2':
-            pMiniDataBase->showAllHumansInDatabase();
-            //system("pause");
+            if(pMiniDataBase->isNotEmpty())
+            {
+                pMiniDataBase->showAllHumansInDatabase();
+            }
+            else
+            {
+                std::cout << "DataBase is Empty!" << std::endl;
+            }
             break;
 
         /* 3. Save Database to file       */
         case '3':
-            if(fileName.empty())
+            if(pMiniDataBase->isNotEmpty())
             {
-                std::cout << "Set name of database file: ";
-                std::cin >> fileName;
-                pMiniDataBase->saveDatabaseToFile(fileName);
+                if(fileName.empty())
+                {
+                    std::cout << "Set name of database file: ";
+                    std::cin >> fileName;
+                    pMiniDataBase->saveDatabaseToFile(fileName);
+                }
+                else
+                {
+                    pMiniDataBase->saveDatabaseToFile(fileName);
+                }
             }
             else
             {
-                pMiniDataBase->saveDatabaseToFile(fileName);
+                std::cout << "DataBase is Empty!" << std::endl;
             }
+
             break;
 
         /* 4. Load Database from file     */
@@ -136,26 +149,40 @@ void mainMenu::handleSelectedOption(char Input)
         
         /* 5. Search Database by name     */
         case '5':
-            if (pMiniDataBase->getNumberOfEntries() != 0U)
+            if (pMiniDataBase->isNotEmpty())
             {
                 std::cout << "Search by name : ";
                 std::cin >> tempStringInput;
-                pFoundedIndexes = pMiniDataBase->searchByName(tempStringInput);
-                if (pFoundedIndexes != NULL )
+                pMiniDataBase->searchByName(tempStringInput);
+            }
+            else
+            {
+                std::cout << "DataBase is Empty!" << std::endl;
+            }
+            break;
+
+        /* 6. 6. Remove person from Database (by index) */
+        case '6':
+            if (pMiniDataBase->isNotEmpty())
+            {
+                std::cout << "Tell me, witch index do you want to delte? ";
+                std::cin >> tempShort;
+                if (pMiniDataBase->removeIndexEntiresFromDatabase(tempShort))
                 {
-                    
+                    std::cout << "index " << tempShort << " successfully removed" << std::endl;
+                }
+                else
+                {
+                    std::cout << "Can't removed index: " << tempShort << std::endl;  
                 }
             }
             else
             {
-
+                std::cout << "DataBase is Empty!" << std::endl;
             }
-            std::cout << "Not implemented" << std::endl;
             break;
-
-        /* 6. Remove person from Database */
-        case '6':
-            std::cout << "Not implemented" << std::endl;
+        default:
+            /* should never reached */
             break;
     }
 }
@@ -197,6 +224,8 @@ void mainMenu::handleSelectedDataBaseSource(char Input)
             fileName = "";
             break;
         case '2':
+            pMiniDataBase->loadDataBaseFromFile("MojaBazaDanych");
+            system("pause");
             std::cout << "Not implemented" << std::endl;
             break;
         default:

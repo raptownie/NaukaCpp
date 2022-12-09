@@ -9,21 +9,25 @@ class miniDatabase : private human
     public:
         miniDatabase(int maxNumberOfEntries = 20);
         ~miniDatabase();
-        int getNumberOfEntries(void);
-        int getMaxNumberOfEntries(void);
+        unsigned int getNumberOfEntries(void);
+        unsigned int getMaxNumberOfEntries(void);
         bool setNewHuman(human);
         bool showAllHumansInDatabase(void);
         bool saveDatabaseToFile(std::string);
         bool loadDataBaseFromFile(std::string);
         bool maxEntriesExceeded(void);
-        unsigned int * searchByName(std::string);
-        void displayDataBaseByIndex(unsigned int *);
-        //void removeEntiresFromDatabase(int);
+        void searchByName(std::string);
+        void displayIndexEntries(unsigned int index);
+        bool removeIndexEntiresFromDatabase(unsigned int);
+        bool isNotEmpty(void);
     private:
         int numberOfEntries;
         int maxNumberOfEntries;
         human *pDatabaseOfHuman;
-        std::string BuildDataLine(int);
+        const unsigned short numberOfSemicolonsInDatabaseEntries = 4;
+        std::string BuildDataLine(unsigned int);
+        void increaseNumberOfEntries(void);
+        void decreaseNumberOfEntries(void);
 };
 
 #endif

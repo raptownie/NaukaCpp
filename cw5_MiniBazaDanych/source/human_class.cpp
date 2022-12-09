@@ -3,10 +3,7 @@
 
 human::human()
 {
-    setName("NoData");
-    setSurname("NoData");
-    setPhoneNumber("NoData");
-    setAge(999);
+    setBlank();
 }
 
 
@@ -55,4 +52,10 @@ void human::setAge(short Age)
     this->age = Age;
 }
 
-
+void human::setBlank(void)
+{
+    setName("NoData");
+    setSurname("NoData");
+    setPhoneNumber("NoData");
+    setAge(999);
+}

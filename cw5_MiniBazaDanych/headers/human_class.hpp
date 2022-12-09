@@ -21,6 +21,7 @@ class human
         std::string getPhoneNumber(void);
         void setPhoneNumber(std::string);
 
+        void setBlank (void);
     private:
         std::string name;
         std::string surname;
